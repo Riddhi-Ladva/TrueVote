@@ -1,0 +1,70 @@
+/* src/components/TermsConditions.css */
+.terms-conditions-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .terms-conditions-header {
+    text-align: center;
+    justify-items: center;
+    justify-items: center;
+  }
+
+  .terms-conditions-header h1 {
+    font-size: 3rem;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
+  }
+  
+  .terms-conditions-header p {
+    font-size: 1.25rem;
+    color: #555;
+  }
+  
+  .terms-conditions-content {
+    margin-bottom: 40px;
+  }
+  
+  .terms-section {
+    margin-bottom: 30px;
+  }
+  
+  .terms-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .terms-section p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+  
+  .terms-section ul {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  
+  .terms-section ul li {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+  
+  .terms-conditions-footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-top: 1px solid #ddd;
+    margin-top: 40px;
+  }
+  
+  .terms-conditions-footer p {
+    margin: 0;
+    color: #555;
+  }
+  

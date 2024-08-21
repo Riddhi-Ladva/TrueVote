@@ -1,0 +1,57 @@
+/* src/components/Results.css */
+.results-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .results-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #007bff;
+  }
+  
+  .results-summary, .results-chart, .results-detailed {
+    margin: 20px 0;
+  }
+  
+  .results-summary h2, .results-chart h2, .results-detailed h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .results-summary p {
+    font-size: 1.25rem;
+    margin: 5px 0;
+  }
+  
+  .results-chart {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .results-detailed table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .results-detailed th, .results-detailed td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .results-detailed th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .results-detailed tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  

@@ -1,0 +1,113 @@
+/* src/components/ElectionInfo.css */
+.election-info-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .election-info-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .election-info-header h1 {
+    font-size: 3rem;
+    color: #007bff;
+  }
+  
+  .election-info-header p {
+    font-size: 1.25rem;
+    color: #555;
+  }
+  
+  .election-calendar {
+    margin-bottom: 40px;
+  }
+  
+  .election-calendar h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .calendar-row {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .calendar-row.header {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .calendar-cell {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.15rem;
+  }
+  
+  .voting-guidelines {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  
+  .voting-guidelines h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .voting-guidelines p {
+    font-size: 1.25rem;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .voting-guidelines ul {
+    list-style-type: disc;
+    padding-left: 40px;
+    display: inline-block;
+    text-align: left;
+  }
+  
+  .voting-guidelines ul li {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+  
+  .election-info-footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-top: 1px solid #ddd;
+    margin-top: 40px;
+    border-radius: 10px;
+  }
+  
+  .election-info-footer p {
+    margin: 0;
+    color: #555;
+  }
+  
+  .election-info-footer a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .election-info-footer a:hover {
+    text-decoration: underline;
+  }
+  

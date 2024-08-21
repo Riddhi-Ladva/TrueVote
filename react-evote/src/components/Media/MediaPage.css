@@ -1,0 +1,39 @@
+.media-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.feed {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.post {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.post img, .post video {
+  max-width: 100%;
+  height: auto;
+}
+
+.comments {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.post-form {
+  margin-bottom: 20px;
+}
+
+.post-form select, .post-form input {
+  margin: 5px;
+  padding: 5px;
+}
+
+.post-form button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
