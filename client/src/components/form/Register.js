@@ -8,6 +8,10 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState(''); // Corrected useState for role
+  const [name, setName] = useState(''); // Corrected useState for name
+  const [contactNumber, setContactNumber] = useState(''); // Corrected useState for contactNumber
+  const [address, setAddress] = useState(''); // Corrected useState for address
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -18,6 +22,10 @@ function Register() {
     console.log('Username:', username);
     console.log('Email:', email);
     console.log('Password:', password);
+    console.log('Role:', role);
+    console.log('Name:', name);
+    console.log('Contact Number:', contactNumber);
+    console.log('Address:', address);
   };
 
   return (
@@ -58,6 +66,42 @@ function Register() {
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Role:</label>
+            <input
+              type="text"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Name:</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Contact Number:</label>
+            <input
+              type="text"
+              value={contactNumber}
+              onChange={(e) => setContactNumber(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Address:</label>
+            <input
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
               required
             />
           </div>
