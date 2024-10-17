@@ -1,11 +1,13 @@
+// src/components/ElectionInfo.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './ElectionInfo.css';
 
 const ElectionInfo = () => {
   return (
     <div className="election-info-container">
       <header className="election-info-header">
-        <br/><h1>Upcoming Elections</h1>
+        <h1>Election Information</h1>
         <p>Stay informed about the latest elections, deadlines, and procedures.</p>
       </header>
 
@@ -17,20 +19,34 @@ const ElectionInfo = () => {
             <div className="calendar-cell">Date</div>
             <div className="calendar-cell">Registration Deadline</div>
             <div className="calendar-cell">Voting Period</div>
+            <div className="calendar-cell">Action</div>
           </div>
+
           <div className="calendar-row">
             <div className="calendar-cell">General Election</div>
             <div className="calendar-cell">Nov 5, 2024</div>
             <div className="calendar-cell">Oct 1, 2024</div>
             <div className="calendar-cell">Nov 1-5, 2024</div>
+            <div className="calendar-cell">
+              <Link to="/vote/general-election">
+                <button className="vote-button">Vote</button>
+              </Link>
+            </div>
           </div>
+
           <div className="calendar-row">
             <div className="calendar-cell">Local Elections</div>
             <div className="calendar-cell">Mar 12, 2025</div>
             <div className="calendar-cell">Feb 10, 2025</div>
             <div className="calendar-cell">Mar 8-12, 2025</div>
+            <div className="calendar-cell">
+              <Link to="/vote/local-election">
+                <button className="vote-button">Vote</button>
+              </Link>
+            </div>
           </div>
-          {/* Add more rows as needed */}
+
+          {/* Add more election rows as needed */}
         </div>
       </section>
 

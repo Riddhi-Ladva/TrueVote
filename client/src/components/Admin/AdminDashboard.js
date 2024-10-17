@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -16,7 +17,9 @@ const AdminDashboard = () => {
             <div className="admin-tool">
               <h3>Election Management</h3>
               <p>Set up and manage upcoming elections, including candidate registration and voting periods.</p>
-              <button className="admin-button">Manage Elections</button>
+              <Link to="/manage-elections">
+                <button className="admin-button">Manage Elections</button>
+              </Link>
             </div>
             <div className="admin-tool">
               <h3>Results Overview</h3>

@@ -1,37 +1,69 @@
-// src/components/form/Register.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import './Register.css'; // Import the register-specific CSS
+import { Link } from 'react-router-dom';
+import './Register.css';
 
 function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState(''); // Corrected useState for role
-  const [name, setName] = useState(''); // Corrected useState for name
-  const [contactNumber, setContactNumber] = useState(''); // Corrected useState for contactNumber
-  const [address, setAddress] = useState(''); // Corrected useState for address
+  const [role, setRole] = useState('voter'); // Default role set to 'voter'
+  const [profile, setProfile] = useState({ name: '', contactNumber: '', address: '' });
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Check if passwords match
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setErrorMessage('Passwords do not match');
       return;
     }
-    console.log('Username:', username);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Role:', role);
-    console.log('Name:', name);
-    console.log('Contact Number:', contactNumber);
-    console.log('Address:', address);
+
+    // Prepare user data to match the backend schema
+    const userData = {
+      username,
+      email,
+      passwordHash: password,  // Send password as passwordHash
+      role,                    // Role must be 'voter', 'candidate', or 'admin'
+      profile: {
+        name: profile.name,
+        contactNumber: profile.contactNumber,
+        address: profile.address
+      }
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData)
+      });
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        throw new Error(`Unexpected response: ${text}`);
+      }
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+
+      console.log('User registered successfully:', data);
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
 
   return (
     <div className="register-page">
       <div className="register-box">
         <h2>Register</h2>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Username:</label>
@@ -71,19 +103,18 @@ function Register() {
           </div>
           <div className="form-group">
             <label>Role:</label>
-            <input
-              type="text"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              required
-            />
+            <select value={role} onChange={(e) => setRole(e.target.value)} required>
+              <option value="voter">Voter</option>
+              <option value="candidate">Candidate</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
           <div className="form-group">
             <label>Name:</label>
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={profile.name}
+              onChange={(e) => setProfile({ ...profile, name: e.target.value })}
               required
             />
           </div>
@@ -91,8 +122,8 @@ function Register() {
             <label>Contact Number:</label>
             <input
               type="text"
-              value={contactNumber}
-              onChange={(e) => setContactNumber(e.target.value)}
+              value={profile.contactNumber}
+              onChange={(e) => setProfile({ ...profile, contactNumber: e.target.value })}
               required
             />
           </div>
@@ -100,8 +131,8 @@ function Register() {
             <label>Address:</label>
             <input
               type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              value={profile.address}
+              onChange={(e) => setProfile({ ...profile, address: e.target.value })}
               required
             />
           </div>

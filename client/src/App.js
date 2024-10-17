@@ -13,6 +13,9 @@ import AdminDashboard from './components/Admin/AdminDashboard';
 import MediaPage from './components/Media/MediaPage';
 import PostForm from './components/Media/Postform';
 import Post from './components/Media/Post';
+import ManageElections from './components/Admin/ManageElections';
+import VotePage from './components/VotePage';
+
 
 function App() {
   return (
@@ -32,6 +35,12 @@ function App() {
             <Route path="Mediapage" element={<MediaPage/>}/>
             <Route path="PostForm" element={<PostForm/>}/>
             <Route path='Post' element={<Post/>}/>
+            <Route path="/Admin" element={<AdminDashboard />} />
+            <Route path="/manage-elections" element={<ManageElections />} />
+            <Route path="/vote/general-election" element={<VotePage electionName="General Election" />} />
+            <Route path="/vote/local-election" element={<VotePage electionName="Local Elections" />} />
+
+
             
           </Route>
         </Routes>
