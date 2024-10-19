@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout'; // Ensure correct path
+import Layout from './components/Layout';
 import Home from './components/Home';
 import ProfileCard from './components/ProfileCard';
 import Login from './components/form/Login';
@@ -35,7 +35,7 @@ function App() {
             <Route path="Mediapage" element={<MediaPage/>}/>
             <Route path="PostForm" element={<PostForm/>}/>
             <Route path='Post' element={<Post/>}/>
-            <Route path="/Admin" element={<AdminDashboard />} />
+           
             <Route path="/manage-elections" element={<ManageElections />} />
             <Route path="/vote/general-election" element={<VotePage electionName="General Election" />} />
             <Route path="/vote/local-election" element={<VotePage electionName="Local Elections" />} />

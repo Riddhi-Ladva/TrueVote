@@ -9,6 +9,18 @@ dotenv.config();
 
 const app = express();
 
+// Add headers to handle CORS Errors
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+
+  next();
+});
+
 // Middleware to parse JSON bodies
 app.use(express.json());
 

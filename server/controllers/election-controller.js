@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const {Election} = require('../models/election');
-const {HttpError} = require('../models/http-error');
+const HttpError = require('../models/http-error');
 
 // Create a new election
 exports.createElection = async (req, res, next) => {

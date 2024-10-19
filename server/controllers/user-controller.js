@@ -14,10 +14,9 @@ const registerUser = async (req, res, next) => {
   }
 
   const { username, email, password, role, profile } = req.body;
-  // console.log(req.body);
+
   let existingUser;
   try {
-    console.log(existingUser);
     existingUser = await User.findOne({ email: email });
   } catch (err) {
     const error = new HttpError('Signing up failed, please try again later.', 500);
@@ -48,7 +47,6 @@ const registerUser = async (req, res, next) => {
   });
 
   try {
-    console.log(createdUser);
     await createdUser.save();
   } catch (err) {
     const error = new HttpError('Signing up failed, please try again.', 500);
@@ -58,7 +56,7 @@ const registerUser = async (req, res, next) => {
   let token;
   try {
     token = jwt.sign(
-      { userId: createdUser.id, email: createdUser.email, role: createdUser.role  },
+      { userId: createdUser.id, email: createdUser.email, role: createdUser.role },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -67,9 +65,8 @@ const registerUser = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({ userId: createdUser.id, email: createdUser.email, role: createdUser.role , token: token });
+  res.status(201).json({ userId: createdUser.id, email: createdUser.email, role: createdUser.role, token: token });
 };
-
 // Controller for user login
 const loginUser = async (req, res, next) => {
   const { email, password } = req.body;
@@ -118,26 +115,32 @@ const loginUser = async (req, res, next) => {
 
 // Controller for getting user profile
 const getUserProfile = async (req, res, next) => {
-  const userId = req.userData.userId;
+  const userId = req.userData?.userId; // Ensure userId exists
+
+  if (!userId) {
+    const error = new HttpError('User ID is missing.', 400); // Handle missing user ID
+    return next(error);
+  }
 
   let user;
   try {
-    console.log(user);
-    console.log(userId);
+    console.log('Fetching user with ID:', userId); // Log the userId being queried
 
     user = await User.findById(userId, '-passwordHash'); // Exclude passwordHash field
+    console.log('User fetched:', user); // Log the user object
   } catch (err) {
     const error = new HttpError('Fetching profile failed, please try again later.', 500);
     return next(error);
   }
 
   if (!user) {
-    const error = new HttpError('Could not find user for the provided id.', 404);
+    const error = new HttpError('Could not find user for the provided ID.', 404);
     return next(error);
   }
 
-  res.json({ user: user.toObject({ getters: true }) });
+  res.json({ user: user.toObject({ getters: true }) }); // Return the user object
 };
+
 
 // Controller for updating user profile
 const updateUserProfile = async (req, res, next) => {

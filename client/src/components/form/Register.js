@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import './Register.css';
 
 function Register() {
@@ -7,25 +7,24 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('voter'); // Default role set to 'voter'
+  const [role, setRole] = useState('voter');
   const [profile, setProfile] = useState({ name: '', contactNumber: '', address: '' });
   const [errorMessage, setErrorMessage] = useState('');
 
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Check if passwords match
     if (password !== confirmPassword) {
       setErrorMessage('Passwords do not match');
       return;
     }
 
-    // Prepare user data to match the backend schema
     const userData = {
       username,
       email,
-      passwordHash: password,  // Send password as passwordHash
-      role,                    // Role must be 'voter', 'candidate', or 'admin'
+      password,  // plain password (backend will hash it)
+      role,
       profile: {
         name: profile.name,
         contactNumber: profile.contactNumber,
@@ -42,18 +41,15 @@ function Register() {
         body: JSON.stringify(userData)
       });
 
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        const text = await response.text();
-        throw new Error(`Unexpected response: ${text}`);
-      }
-
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.message || 'Registration failed');
       }
 
+      // Store the token for future use (e.g., accessing protected routes)
+      localStorage.setItem('token', data.token);
       console.log('User registered successfully:', data);
+      navigate("/");
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -138,9 +134,9 @@ function Register() {
           </div>
           <button type="submit">Register</button>
         </form>
-        <div className="login-link">
-          <p>Already have an account? <Link to="/form/login">Login</Link></p>
-        </div>
+        <p>
+          Already have an account? <Link to="/form/login">Login here</Link>.
+        </p>
       </div>
     </div>
   );
