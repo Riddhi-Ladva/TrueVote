@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ManageElections.css';
 
 const ManageElections = () => {
   const [elections, setElections] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
-  // Fetch elections from the backend when the component mounts
   useEffect(() => {
     const fetchElections = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/elections'); // Assuming the API endpoint
+        const response = await fetch('http://localhost:5000/api/elections');
         if (!response.ok) {
           throw new Error('Failed to fetch elections');
         }
         const data = await response.json();
-        setElections(data.elections); // Set elections data from the API
+        setElections(data.elections);
       } catch (error) {
         setErrorMessage(error.message);
       }
@@ -23,7 +24,6 @@ const ManageElections = () => {
     fetchElections();
   }, []);
 
-  // Filter elections based on status
   const upcomingElections = elections.filter(election => election.status === 'scheduled');
   const ongoingElections = elections.filter(election => election.status === 'ongoing');
   const completedElections = elections.filter(election => election.status === 'completed');
@@ -36,7 +36,7 @@ const ManageElections = () => {
       if (!response.ok) {
         throw new Error('Failed to delete election');
       }
-      setElections(elections.filter(election => election._id !== electionId)); // Remove the deleted election from state
+      setElections(elections.filter(election => election._id !== electionId));
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -51,7 +51,9 @@ const ManageElections = () => {
 
       {/* Section for Adding New Election */}
       <div className="manage-elections-buttons">
-        <button className="manage-button">Add New Election</button>
+        <button className="manage-button" onClick={() => navigate('/add-election')}>
+          Add New Election
+        </button>
       </div>
 
       {/* Display Upcoming Elections (can be modified or deleted) */}
@@ -68,7 +70,7 @@ const ManageElections = () => {
         ))}
       </section>
 
-      {/* Display Ongoing Elections (cannot be modified or deleted) */}
+      {/* Display Ongoing Elections (can view) */}
       <section>
         <h2>Ongoing Elections</h2>
         {ongoingElections.length === 0 && <p>No ongoing elections available.</p>}
@@ -76,12 +78,12 @@ const ManageElections = () => {
           <div key={election._id} className="election-item">
             <h3>{election.name}</h3>
             <p>{election.description}</p>
-            <button className="manage-button" disabled>Cannot modify ongoing election</button>
+            <button className="manage-button" onClick={() => navigate(`/ongoingelectionview/${election._id}`)}>View</button>
           </div>
         ))}
       </section>
 
-      {/* Display Completed Elections (cannot be modified or deleted) */}
+      {/* Display Completed Elections (can view) */}
       <section>
         <h2>Completed Elections</h2>
         {completedElections.length === 0 && <p>No completed elections available.</p>}
@@ -89,7 +91,7 @@ const ManageElections = () => {
           <div key={election._id} className="election-item">
             <h3>{election.name}</h3>
             <p>{election.description}</p>
-            <button className="manage-button" disabled>Cannot modify completed election</button>
+            <button className="manage-button" onClick={() => navigate(`/completedelectionview/${election._id}`)}>View</button>
           </div>
         ))}
       </section>

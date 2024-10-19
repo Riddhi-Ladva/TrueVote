@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="admin-dashboard-container">
       <header className="admin-dashboard-header">
-        <br/><h1>Admin Dashboard</h1>
+        <br /><h1>Admin Dashboard</h1>
         <p>Manage the e-voting system, oversee users, and generate reports.</p>
       </header>
 
@@ -27,22 +29,13 @@ const AdminDashboard = () => {
               <button className="admin-button">View Results</button>
             </div>
             <div className="admin-tool">
-              <h3>User Issues</h3>
-              <p>Address user queries and issues related to the e-voting system.</p>
-              <button className="admin-button">Handle Issues</button>
-            </div>
-            <div className="admin-tool">
-              <h3>Report Generation</h3>
-              <p>Generate detailed reports for analysis and record-keeping.</p>
-              <button className="admin-button">Generate Reports</button>
+              <h3>User Management</h3>
+              <p>Oversee registered voters and manage user roles and permissions.</p>
+              <button className="admin-button" onClick={() => navigate('/manage-users')}>
+                Manage Users
+              </button>
             </div>
           </div>
-        </section>
-
-        <section className="user-management">
-          <h2>User Management</h2>
-          <p>Oversee registered voters and manage user roles and permissions.</p>
-          <button className="admin-button">Manage Users</button>
         </section>
       </div>
     </div>

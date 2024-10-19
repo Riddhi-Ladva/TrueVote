@@ -15,6 +15,10 @@ import PostForm from './components/Media/Postform';
 import Post from './components/Media/Post';
 import ManageElections from './components/Admin/ManageElections';
 import VotePage from './components/VotePage';
+import ElectionForm from './components/Admin/ElectionForm';
+import ManageUsers from './components/Admin/ManageUsers'; // Import the new component
+
+
 
 
 function App() {
@@ -39,6 +43,10 @@ function App() {
             <Route path="/manage-elections" element={<ManageElections />} />
             <Route path="/vote/general-election" element={<VotePage electionName="General Election" />} />
             <Route path="/vote/local-election" element={<VotePage electionName="Local Elections" />} />
+            <Route path="/add-election" element={<ElectionForm />} />
+            <Route path="/manage-users" element={<ManageUsers />} /> 
+
+
 
 
             
