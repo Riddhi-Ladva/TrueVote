@@ -38,7 +38,7 @@ const ProfileCard = () => {
   const fetchVotingHistory = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/users/voting-history', {
+      const response = await fetch('http://localhost:5000/api/votes/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +51,8 @@ const ProfileCard = () => {
       }
 
       const data = await response.json();
-      setVotingHistory(data.history); // Assuming data.history is an array of election objects
+      console.log(data);
+      // setVotingHistory(data.history); // Assuming data.history is an array of election objects
       setShowModal(true); // Show modal after fetching history
     } catch (error) {
       setErrorMessage(error.message);
@@ -73,7 +74,7 @@ const ProfileCard = () => {
       <div className="profile-card">
         <div className="profile-header">
           <img src="/profile.png" alt="Profile Avatar" className="profile-avatar" />
-          <h2 className="profile-name">{userData.profile?.name || 'N/A'}</h2>
+          <h2 className="profile-name">{userData.username || 'N/A'}</h2>
           <p className="profile-id">Voter ID: {userData._id}</p>
         </div>
 
@@ -85,14 +86,10 @@ const ProfileCard = () => {
             <p><strong>Contact Number:</strong> {userData.profile?.contactNumber || 'N/A'}</p>
           </div>
 
-          <div className="profile-section">
-            <h3>Voting Status</h3>
-            <p><strong>Last Election:</strong> {userData.lastElection || 'N/A'}</p>
-            <p><strong>Status:</strong> {userData.votingStatus || 'Not Voted'}</p>
-          </div>
+         
 
           <div className="profile-actions">
-            <button className="action-btn" onClick={() => navigate('/update-profile')}>Update Profile</button>
+            <button className="action-btn" onClick={() => navigate('/UpdateProfile')}>Update Profile</button>
             <button className="action-btn" onClick={fetchVotingHistory}>View Voting History</button>
           </div>
         </div>

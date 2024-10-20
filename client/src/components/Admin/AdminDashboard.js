@@ -1,10 +1,9 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+
+import { Link,useNavigate} from 'react-router-dom';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-
   return (
     <div className="admin-dashboard-container">
       <header className="admin-dashboard-header">

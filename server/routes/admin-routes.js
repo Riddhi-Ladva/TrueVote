@@ -8,7 +8,9 @@ const router = express.Router();
 // Middleware to protect the routes
 router.use(checkAuth);
 router.use(checkAdmin);
-
+router.get('/check', checkAdmin, (req, res, next) => {
+    res.status(200).json({ message: 'User is an admin.' });
+  });
 // Route to get all users (admin-only)
 router.get('/users', adminController.getAllUsers);
 

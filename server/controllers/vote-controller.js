@@ -74,7 +74,7 @@ exports.getVotesByElection = async (req, res, next) => {
 
 // Get all votes cast by a specific voter
 exports.getVotesByUser = async (req, res, next) => {
-  const { userID } = req.params;
+  const userID = req.userData?.userId;
 
   try {
     // Retrieve votes cast by the specified user

@@ -1,4 +1,7 @@
 /* src/components/form/Login.css */
+* {
+  box-sizing: border-box;
+}
 
 .login-page {
   display: flex;
@@ -10,10 +13,10 @@
 
 .login-box {
   background-color: #ffffff;
-  padding: 40px;
+  padding: 20px; /* Adjusted padding */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  width: 450px;
 }
 
 .login-box h2 {
@@ -23,7 +26,7 @@
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 10px; /* Adjusted margin */
 }
 
 .form-group label {
@@ -34,15 +37,16 @@
 
 .form-group input {
   width: 100%;
+  height: 40px; /* Consistent height */
   padding: 10px;
-  box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
 button[type="submit"] {
   width: 100%;
-  padding: 10px;
+  height: 40px; /* Consistent height */
+  padding: 10px; /* Padding can be adjusted if needed */
   background-color: #4CAF50;
   color: white;
   border: none;
@@ -51,7 +55,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color:  #007bff;
+  background-color: #007bff;
 }
 
 .register-link {
@@ -66,7 +70,7 @@ button[type="submit"]:hover {
 }
 
 .register-link a {
-  color:  #007bff;
+  color: #007bff;
   text-decoration: none;
 }
 

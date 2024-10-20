@@ -23,22 +23,29 @@ const ElectionForm = () => {
       updatedAt: new Date(),
     };
 
+
     try {
-      const response = await fetch('http://localhost:5000/api/elections', {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:5000/api/elections/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(newElection),
       });
+
       if (!response.ok) {
-        throw new Error('Failed to add the new election');
+        const errorData = await response.json(); // Extract error message from backend response
+        throw new Error(errorData.message || 'Failed to add the new election');
       }
-      navigate('/manage-elections'); // Redirect back to the manage elections page after successful submission
+
+      navigate('/manage-elections'); // Redirect after successful submission
     } catch (error) {
       setErrorMessage(error.message);
     }
   };
+
 
   return (
     <div className="election-form-container">

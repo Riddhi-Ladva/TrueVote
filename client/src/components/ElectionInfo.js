@@ -1,9 +1,34 @@
 // src/components/ElectionInfo.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './ElectionInfo.css';
 
 const ElectionInfo = () => {
+  const [elections, setElections] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const fetchElections = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/elections'); // Update with your endpoint
+        if (!response.ok) {
+          throw new Error('Failed to fetch elections');
+        }
+
+        const data = await response.json();
+        setElections(data.elections); // Store all elections
+      } catch (error) {
+        setErrorMessage(error.message);
+      }
+    };
+
+    fetchElections();
+  }, []);
+
+  // Filter ongoing and upcoming elections
+  const ongoingElections = elections.filter(election => election.status === 'ongoing');
+  const upcomingElections = elections.filter(election => new Date(election.startDate) > new Date());
+
   return (
     <div className="election-info-container">
       <header className="election-info-header">
@@ -11,42 +36,59 @@ const ElectionInfo = () => {
         <p>Stay informed about the latest elections, deadlines, and procedures.</p>
       </header>
 
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+
       <section className="election-calendar">
-        <h2>Election Calendar</h2>
+        <h2>Ongoing Elections</h2>
         <div className="calendar-table">
           <div className="calendar-row header">
             <div className="calendar-cell">Election Name</div>
-            <div className="calendar-cell">Date</div>
-            <div className="calendar-cell">Registration Deadline</div>
             <div className="calendar-cell">Voting Period</div>
             <div className="calendar-cell">Action</div>
           </div>
 
-          <div className="calendar-row">
-            <div className="calendar-cell">General Election</div>
-            <div className="calendar-cell">Nov 5, 2024</div>
-            <div className="calendar-cell">Oct 1, 2024</div>
-            <div className="calendar-cell">Nov 1-5, 2024</div>
-            <div className="calendar-cell">
-              <Link to="/vote/general-election">
-                <button className="vote-button">Vote</button>
-              </Link>
+          {ongoingElections.length === 0 ? (
+            <div className="calendar-row">
+              <div className="calendar-cell" colSpan="3">No ongoing elections</div>
             </div>
+          ) : (
+            ongoingElections.map((election) => (
+              <div className="calendar-row" key={election._id}>
+                <div className="calendar-cell">{election.name}</div>
+                <div className="calendar-cell">{new Date(election.startDate).toLocaleDateString()} - {new Date(election.endDate).toLocaleDateString()}</div>
+                <div className="calendar-cell">
+                  <Link to={`/vote/${election._id}`}>
+                    <button className="vote-button">Vote</button>
+                  </Link>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+
+      <section className="election-calendar">
+        <h2>Upcoming Elections</h2>
+        <div className="calendar-table">
+          <div className="calendar-row header">
+            <div className="calendar-cell">Election Name</div>
+            <div className="calendar-cell">Voting Period</div>
+         
           </div>
 
-          <div className="calendar-row">
-            <div className="calendar-cell">Local Elections</div>
-            <div className="calendar-cell">Mar 12, 2025</div>
-            <div className="calendar-cell">Feb 10, 2025</div>
-            <div className="calendar-cell">Mar 8-12, 2025</div>
-            <div className="calendar-cell">
-              <Link to="/vote/local-election">
-                <button className="vote-button">Vote</button>
-              </Link>
+          {upcomingElections.length === 0 ? (
+            <div className="calendar-row">
+              <div className="calendar-cell" colSpan="3">No upcoming elections</div>
             </div>
-          </div>
-
-          {/* Add more election rows as needed */}
+          ) : (
+            upcomingElections.map((election) => (
+              <div className="calendar-row" key={election._id}>
+                <div className="calendar-cell">{election.name}</div>
+                <div className="calendar-cell">{new Date(election.startDate).toLocaleDateString()} - {new Date(election.endDate).toLocaleDateString()}</div>
+               
+              </div>
+            ))
+          )}
         </div>
       </section>
 

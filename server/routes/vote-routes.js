@@ -24,6 +24,6 @@ router.post(
 router.get('/:electionID', voteController.getVotesByElection);
 
 // GET /api/votes/user/:userID - Get all votes cast by a specific voter
-router.get('/user/:userID', voteController.getVotesByUser);
+router.get('/', voteController.getVotesByUser);
 
 module.exports = router;

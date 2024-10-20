@@ -1,6 +1,6 @@
 const { User } = require('../models/user');
-const {HttpError} = require('../models/http-error');
-
+const HttpError = require('../models/http-error');
+const mongoose = require('mongoose');
 // Controller to get all users
 exports.getAllUsers = async (req, res, next) => {
   try {
@@ -13,8 +13,15 @@ exports.getAllUsers = async (req, res, next) => {
 };
 
 // Controller to delete a user by ID
+// Controller to delete a user by ID
 exports.deleteUser = async (req, res, next) => {
   const userId = req.params.userId;
+  console.log(userId);
+
+  // Check if the userId is a valid ObjectId
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return next(new HttpError('Invalid user ID.', 400));
+  }
 
   try {
     const user = await User.findById(userId);
@@ -29,3 +36,5 @@ exports.deleteUser = async (req, res, next) => {
     return next(error);
   }
 };
+
+

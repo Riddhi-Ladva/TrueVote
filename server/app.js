@@ -11,16 +11,20 @@ const app = express();
 
 // Add headers to handle CORS Errors
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // Specify the allowed origin
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE");
+
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200); // Respond with 200 for preflight requests
+  }
 
   next();
 });
-
 // Middleware to parse JSON bodies
 app.use(express.json());
 
@@ -31,6 +35,7 @@ const voteRoutes = require('./routes/vote-routes');
 const electionRoutes = require('./routes/election-routes');
 
 // Use routes
+
 app.use('/api/users', usersRoutes);
 app.use('/api/votes', voteRoutes);
 app.use('/api/elections', electionRoutes); // Use election routes

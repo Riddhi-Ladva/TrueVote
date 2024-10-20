@@ -11,6 +11,7 @@ const router = express.Router();
 // Route to create a new election (admin-only)
 router.post(
   '/',
+  checkAuth,
   checkAdmin,
   [
     check('name').not().isEmpty().withMessage('Election name is required.'),

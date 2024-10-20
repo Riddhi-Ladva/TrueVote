@@ -15,13 +15,19 @@ const UpdateProfile = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true); // Track loading state
   const navigate = useNavigate();
-
   useEffect(() => {
-    // Fetch the current user data to populate the form
+    console.log("In useeffect");
     const fetchUserProfile = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setErrorMessage('No token found, please log in again.');
+        setIsLoading(false);
+        return; // Exit if there's no token
+      }
+  
       try {
-        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:5000/api/users/profile', {
           method: 'GET',
           headers: {
@@ -29,44 +35,48 @@ const UpdateProfile = () => {
             'Authorization': `Bearer ${token}`
           }
         });
-
+        console.log("Devs");
         if (!response.ok) {
           throw new Error('Failed to fetch user profile');
         }
-
+        
         const data = await response.json();
+
+        console.log(data);
         setFormData({
-          username: data.username,
-          email: data.email,
-          role: data.role,
+          username: data.user.username || '',
+          email: data.user.email || '',
+          role: data.user.role || '',
           profile: {
-            address: data.profile?.address || '',
-            contactNumber: data.profile?.contactNumber || ''
+            address: data.user.profile?.address || '',
+            contactNumber: data.user.profile?.contactNumber || ''
           }
         });
       } catch (error) {
         setErrorMessage(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
-
+  
     fetchUserProfile();
   }, []);
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'address' || name === 'contactNumber') {
-      setFormData({
-        ...formData,
+      setFormData((prev) => ({
+        ...prev,
         profile: {
-          ...formData.profile,
+          ...prev.profile,
           [name]: value
         }
-      });
+      }));
     } else {
-      setFormData({
-        ...formData,
+      setFormData((prev) => ({
+        ...prev,
         [name]: value
-      });
+      }));
     }
   };
 
@@ -75,7 +85,7 @@ const UpdateProfile = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/users/update-profile', {
+      const response = await fetch('http://localhost:5000/api/users/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -93,6 +103,10 @@ const UpdateProfile = () => {
       setErrorMessage(error.message);
     }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Show a loading indicator while fetching data
+  }
 
   return (
     <div className="update-profile-container">
@@ -128,7 +142,7 @@ const UpdateProfile = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            required
+            
           />
         </label>
 

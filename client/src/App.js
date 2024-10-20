@@ -17,6 +17,9 @@ import ManageElections from './components/Admin/ManageElections';
 import VotePage from './components/VotePage';
 import ElectionForm from './components/Admin/ElectionForm';
 import ManageUsers from './components/Admin/ManageUsers'; // Import the new component
+import UpdateProfile from './components/UpdateProfile';
+
+
 
 
 
@@ -25,6 +28,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+    
+
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -39,19 +44,21 @@ function App() {
             <Route path="Mediapage" element={<MediaPage/>}/>
             <Route path="PostForm" element={<PostForm/>}/>
             <Route path='Post' element={<Post/>}/>
-           
+         
             <Route path="/manage-elections" element={<ManageElections />} />
             <Route path="/vote/general-election" element={<VotePage electionName="General Election" />} />
             <Route path="/vote/local-election" element={<VotePage electionName="Local Elections" />} />
             <Route path="/add-election" element={<ElectionForm />} />
             <Route path="/manage-users" element={<ManageUsers />} /> 
 
-
+            <Route path="/UpdateProfile" element={<UpdateProfile/>}/>
 
 
             
           </Route>
         </Routes>
+      
+
       </BrowserRouter>
     </div>
   );
